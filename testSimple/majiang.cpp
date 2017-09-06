@@ -47,21 +47,22 @@ void main()
 		cout << (int)arrHandCardData[i] << ",";
 	}
 	cout << endl;
-	bool bTagIsPengPengHu = objAlgorithm.IsPengPengHu(arrHandCardData, HAND_CARD_MAX_REPERTORY);
+	//bool bTagIsPengPengHu = objAlgorithm.IsPengPengHu(arrHandCardData, HAND_CARD_MAX_REPERTORY);
+	bool bTagIsPengPengHu = objAlgorithm.IsPengPengHuWithLaizi(arrHandCardData, HAND_CARD_MAX_REPERTORY,&gameData);
 	if (bTagIsPengPengHu)
 		cout << "碰碰和" << endl;
 	else
 		cout << "不是碰碰和" << endl;
-	bool bTagIsQiDuiHu = objAlgorithm.IsQiDuiHu(arrHandCardData, HAND_CARD_MAX_REPERTORY);
-	if (bTagIsPengPengHu)
-		cout << "7对" << endl;
-	else
-		cout << "不是7对" << endl;
-	bool bTagPingHu = objAlgorithm.IsPingHu(arrHandCardData, HAND_CARD_MAX_REPERTORY);
-	if (bTagPingHu)
-		cout << "平和" << endl;
-	else
-		cout << "不是平和" << endl;
+	//bool bTagIsQiDuiHu = objAlgorithm.IsQiDuiHu(arrHandCardData, HAND_CARD_MAX_REPERTORY);
+	//if (bTagIsPengPengHu)
+	//	cout << "7对" << endl;
+	//else
+	//	cout << "不是7对" << endl;
+	//bool bTagPingHu = objAlgorithm.IsPingHu(arrHandCardData, HAND_CARD_MAX_REPERTORY);
+	//if (bTagPingHu)
+	//	cout << "平和" << endl;
+	//else
+	//	cout << "不是平和" << endl;
 
 	system("pause");
 }

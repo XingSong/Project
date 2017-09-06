@@ -22,8 +22,8 @@ private:
 public:
 	CGameAlgorithm();
 	~CGameAlgorithm();
-	//计算AA、AAA、AAAA的数量
-	UINT CountPai(BYTE arrHandCardData[], int len, PAI_REPRESS_FLAG iFlag = NONE_FLAG);
+	//计算A、AA、AAA、AAAA的数量
+	UINT CountPai(BYTE arrHandCardData[], int len, PAI_REPRESS_FLAG iFlag = NONE_FLAG, CGameDataEx *m_pGameDataEx=nullptr);
 
 	//统计数组arrHandCardData中每个元素出现的次数,返回给countArray
 	int* CountElemCount(BYTE arrHandCardData[], int len, int countArray[]);
@@ -38,7 +38,7 @@ public:
 	bool IsPingHu(BYTE arrHandCardData[], int len);
 //带赖子的试着操作
 	//判断碰碰和
-	bool IsPengPengHuWithLaizi(BYTE arrHandCardData[], int len,CGameDataEx *pGameDataEx);
+	bool IsPengPengHuWithLaizi(BYTE arrHandCardData[], int len,CGameDataEx *m_pGameDataEx);
 
 	//按花色、牌值升序排序
 	void SortCardAsc(BYTE arr[], int len);

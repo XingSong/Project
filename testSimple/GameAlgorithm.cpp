@@ -15,7 +15,7 @@ CGameAlgorithm::~CGameAlgorithm()
 {
 	CC_SAFE_DELETE(m_pGameLogic);
 }
-UINT CGameAlgorithm::CountPai(BYTE arrHandCardData[], int len, PAI_REPRESS_FLAG iFlag)
+UINT CGameAlgorithm::CountPai(BYTE arrHandCardData[], int len, PAI_REPRESS_FLAG iFlag, CGameDataEx *m_pGameDataEx)
 {
 	int count = 0;
 	map<BYTE, int> mapCount;
@@ -29,6 +29,8 @@ UINT CGameAlgorithm::CountPai(BYTE arrHandCardData[], int len, PAI_REPRESS_FLAG 
 
 	for (auto it : mapCount)
 	{
+		if (m_pGameDataEx->byLaiZiCard == it.first)//赖子不参与计算
+			continue;
 		//cout << it.first << endl << it.second << endl;
 		if (iFlag == it.second)
 			count++;
@@ -109,21 +111,85 @@ bool CGameAlgorithm::IsPingHu(BYTE arr[], int len)
 	return false;
 }
 
-bool CGameAlgorithm::IsPengPengHuWithLaizi(BYTE arrHandCardData[], int len, CGameDataEx *pGameDataEx)
+bool CGameAlgorithm::IsPengPengHuWithLaizi(BYTE arrHandCardData[], int len, CGameDataEx *m_pGameDataEx)
 {
-	int iDanzhangNum = CountPai(arrHandCardData, len, DANZHANG_FALG);
-	int iKeziNum = CountPai(arrHandCardData, len, KEZI_FLAG);
-	int iGangNum = CountPai(arrHandCardData, len, GANG_FLAG);
-	int iJiangNum = CountPai(arrHandCardData, len, JIANG_FLAG);
+	int iDanzhangNum = CountPai(arrHandCardData, len, DANZHANG_FALG, m_pGameDataEx);
+	int iKeziNum = CountPai(arrHandCardData, len, KEZI_FLAG, m_pGameDataEx);
+	int iGangNum = CountPai(arrHandCardData, len, GANG_FLAG, m_pGameDataEx);
+	int iJiangNum = CountPai(arrHandCardData, len, JIANG_FLAG, m_pGameDataEx);
 	int iLaiziNum = 0;
+
 	for (size_t i = 0; i < len; i++)
 	{
-		if (arrHandCardData[i] == pGameDataEx->byLaiZiCard)
+		if (arrHandCardData[i] == m_pGameDataEx->byLaiZiCard)
 			iLaiziNum++;
 	}
-	//if (len % 3 != 2)
-	//	return false;
 
+	if (iJiangNum>1)
+	{
+		if (iDanzhangNum<1)
+		{
+			iLaiziNum -= iJiangNum - 1;
+			iKeziNum += iJiangNum-1;
+		}
+		else if (iDanzhangNum == 1)
+		{
+			iLaiziNum -= iJiangNum+1;
+			iKeziNum += iJiangNum;
+			iDanzhangNum--;
+		}
+		iJiangNum = 1;
+	}
+	else if (iJiangNum==0)
+	{
+		if (iDanzhangNum < 1)
+		{
+			iLaiziNum = 0;			
+		}
+		else
+		{
+			if (iLaiziNum == 1 && iDanzhangNum == 1)
+			{
+				iKeziNum = 4 - iGangNum;
+				iDanzhangNum--;
+				iLaiziNum--;
+			}
+			else
+			{
+				iLaiziNum = 0;
+				iDanzhangNum = 0;
+				iKeziNum++;
+			}
+		}
+		iJiangNum++;
+	}
+	else if (iJiangNum == 1)
+	{
+		if (iDanzhangNum < 1)
+		{
+			iLaiziNum = 0;
+			iKeziNum++;
+		}
+		else
+		{
+			if (iDanzhangNum == 1)
+			{
+				iLaiziNum -= iJiangNum + 1;
+				iDanzhangNum--;
+				iKeziNum++;
+			}
+			if (iDanzhangNum == 2)
+			{
+				iLaiziNum -= iDanzhangNum + 2;
+				iDanzhangNum -= 2;
+				iKeziNum += 2;
+			}
+		}
+	}
+	if (iGangNum == 4 && iGangNum * 4 + iDanzhangNum + iLaiziNum + iJiangNum == 18)
+		return true;
+	if (iJiangNum * 2 + iKeziNum * 3 + iDanzhangNum + iLaiziNum == 14)
+		return true;
 	return false;
 }
 
