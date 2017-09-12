@@ -15,5 +15,7 @@ public:
 	BYTE SwitchToCardIndex(BYTE cbCardData);
 
 	BYTE SwitchToCardData(BYTE cbCardIndex);
+	//打印显示牌值，如五筒
+	void printPai(BYTE cbCardData);
 };
 

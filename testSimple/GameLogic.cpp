@@ -1,5 +1,7 @@
 #include "GameLogic.h"
 #include <assert.h>
+#include <iostream>
+using namespace std;
 //扑克数据
 const BYTE CGameLogic::m_cbCardDataArray[MAX_REPERTORY] =
 {
@@ -44,4 +46,83 @@ BYTE CGameLogic::SwitchToCardData(BYTE cbCardIndex)
 
 	assert(cbCardIndex < 34);
 	return ((cbCardIndex / 9) << 4) | (cbCardIndex % 9 + 1);
+}
+
+void CGameLogic::printPai(BYTE cbCardData)
+{
+	BYTE cbValue = (cbCardData&MASK_VALUE);
+	BYTE cbColor = (cbCardData&MASK_COLOR) >> 4;
+	if (cbColor == 3 && cbValue >= 1 && cbValue <= 7)
+	{
+		if (cbValue >= 1 && cbValue <= 4)
+		{
+			if (cbValue == 1)
+				cout << "东";
+			if (cbValue == 2)
+				cout << "南";
+			if (cbValue == 3)
+				cout << "西";
+			if (cbValue == 4)
+				cout << "北";
+			cout << "风";
+		}
+		else
+		{
+			if (cbValue == 5)
+				cout << "红中";
+			if (cbValue == 6)
+				cout << "发财";
+			if (cbValue == 7)
+				cout << "白板";
+
+		}
+		return;
+	}
+	switch (cbValue)
+	{
+	case 1:
+		cout << "一";
+		break;
+	case 2:
+		cout << "二";
+		break;
+	case 3:
+		cout << "三";
+		break;
+	case 4:
+		cout << "四";
+		break;
+	case 5:
+		cout << "五";
+		break;
+	case 6:
+		cout << "六";
+		break;
+	case 7:
+		cout << "七";
+		break;
+	case 8:
+		cout << "八";
+		break;
+	case 9:
+		cout << "九";
+		break;
+	default:
+		break;
+	}
+
+	switch (cbColor)
+	{
+	case 0:
+		cout << "万";
+		break;
+	case 1:
+		cout << "条";
+		break;
+	case 2:
+		cout << "筒";
+		break;
+	default:
+		break;
+	}
 }

@@ -10,4 +10,4 @@
 #define MAX_COUNT					14									//最大数目
 #define BASE_DECIMAL  16
 
-#define GAME_NAME					TEXT("赖子麻将")						//游戏名字
+#define GAME_NAME					TEXT("麻将")						//游戏名字

@@ -16,9 +16,18 @@ class CGameDataEx;
 class CGameLogic;
 class CGameAlgorithm
 {
-private:
+public:
 	CGameLogic *m_pGameLogic;
+private:
 	BYTE m_HandCardData[HAND_CARD_MAX_REPERTORY];
+	struct tagMJKindNum
+	{
+		int iDanzhangNum;
+		int iKeziNum;
+		int iGangNum;
+		int iJiangNum;
+		int iLaiziNum;
+	}m_tMJKindNum;
 public:
 	CGameAlgorithm();
 	~CGameAlgorithm();
@@ -37,8 +46,16 @@ public:
 	//判断平和
 	bool IsPingHu(BYTE arrHandCardData[], int len);
 //带赖子的试着操作
+	//计算A、AA、AAA、AAAA、赖子的数量汇总，方便调用
+	void CalKindm_tMJKindNum(BYTE arrHandCardData[], int len, CGameDataEx *m_pGameDataEx = nullptr);
 	//判断碰碰和
-	bool IsPengPengHuWithLaizi(BYTE arrHandCardData[], int len,CGameDataEx *m_pGameDataEx);
+	bool IsPengPengHuWithLaizi(BYTE arrHandCardData[], int len,CGameDataEx *m_pGameDataEx=nullptr);
+
+	//判断7对
+	bool IsQiDuiHuWithLaizi(BYTE arrHandCardData[], int len, CGameDataEx *m_pGameDataEx = nullptr);
+
+	//判断平和
+	bool IsPingHuWithLaizi(BYTE arrHandCardData[], int len, CGameDataEx *m_pGameDataEx);
 
 	//按花色、牌值升序排序
 	void SortCardAsc(BYTE arr[], int len);

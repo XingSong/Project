@@ -8,7 +8,11 @@
 #include <iostream>
 using namespace std;
 
-
+//27->0x27,牌值转换
+BYTE ByteToHexChar(BYTE pai)
+{
+	return pai / 10 * BASE_DECIMAL + pai % 10;
+}
 void main()
 {
 	//读取json start
@@ -37,7 +41,7 @@ void main()
 	//	0x24, 0x25, 0x35,
 	//	0x35, 0x26 };//平和测试
 	BYTE arrHandCardData[HAND_CARD_MAX_REPERTORY];
-	memset(arrHandCardData, 0, sizeof																			(arrHandCardData));
+	memset(arrHandCardData, 0, sizeof(arrHandCardData));
 	memcpy(arrHandCardData, gameData.m_tMatchMJ.byArHandPai[0], HAND_CARD_MAX_REPERTORY);
 
 	CGameAlgorithm objAlgorithm;
@@ -47,22 +51,48 @@ void main()
 		cout << (int)arrHandCardData[i] << ",";
 	}
 	cout << endl;
-	//bool bTagIsPengPengHu = objAlgorithm.IsPengPengHu(arrHandCardData, HAND_CARD_MAX_REPERTORY);
-	bool bTagIsPengPengHu = objAlgorithm.IsPengPengHuWithLaizi(arrHandCardData, HAND_CARD_MAX_REPERTORY,&gameData);
-	if (bTagIsPengPengHu)
-		cout << "碰碰和" << endl;
-	else
-		cout << "不是碰碰和" << endl;
-	//bool bTagIsQiDuiHu = objAlgorithm.IsQiDuiHu(arrHandCardData, HAND_CARD_MAX_REPERTORY);
-	//if (bTagIsPengPengHu)
-	//	cout << "7对" << endl;
-	//else
-	//	cout << "不是7对" << endl;
-	//bool bTagPingHu = objAlgorithm.IsPingHu(arrHandCardData, HAND_CARD_MAX_REPERTORY);
-	//if (bTagPingHu)
-	//	cout << "平和" << endl;
-	//else
-	//	cout << "不是平和" << endl;
+	for (int i = 0; i < HAND_CARD_MAX_REPERTORY; i++)
+	{
+		BYTE tmp = ByteToHexChar(arrHandCardData[i]);
+		objAlgorithm.m_pGameLogic->printPai(tmp);
+		cout << " ";
+	}
+	cout << endl;
 
+	if (gameData.m_isHasLaiZiFlag != 1)
+	{
+		bool bTagPingHu = objAlgorithm.IsPingHu(arrHandCardData, HAND_CARD_MAX_REPERTORY);
+		if (bTagPingHu)
+			cout << "平和" << endl;
+		else
+			cout << "不是平和" << endl;
+		bool bTagIsPengPengHu = objAlgorithm.IsPengPengHu(arrHandCardData, HAND_CARD_MAX_REPERTORY);
+		if (bTagIsPengPengHu)
+			cout << "碰碰和" << endl;
+		else
+			cout << "不是碰碰和" << endl;
+		bool bTagIsQiDuiHu = objAlgorithm.IsQiDuiHu(arrHandCardData, HAND_CARD_MAX_REPERTORY);
+		if (bTagIsPengPengHu)
+			cout << "7对" << endl;
+		else
+			cout << "不是7对" << endl;
+	}
+	else
+	{
+		BYTE tmpLaizi = ByteToHexChar(gameData.byLaiZiCard);
+		cout << "赖子值: ";
+		objAlgorithm.m_pGameLogic->printPai(tmpLaizi);
+		cout<< endl;
+		bool bTagIsPengPengHu = objAlgorithm.IsPengPengHuWithLaizi(arrHandCardData, HAND_CARD_MAX_REPERTORY, &gameData);
+		if (bTagIsPengPengHu)
+			cout << "碰碰和" << endl;
+		else
+			cout << "不是碰碰和" << endl;
+		bool bTagIsQiDuiHuWithLaizi = objAlgorithm.IsQiDuiHuWithLaizi(arrHandCardData, HAND_CARD_MAX_REPERTORY, &gameData);
+		if (bTagIsQiDuiHuWithLaizi)
+			cout << "7对" << endl;
+		else
+			cout << "不是7对" << endl;
+	}
 	system("pause");
 }

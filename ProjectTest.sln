@@ -29,6 +29,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "rapidJsonTest", "rapidJsonT
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "testSimple", "testSimple\testSimple.vcxproj", "{B0650877-1488-415E-B8EC-BF7BFCE1D20D}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TEST", "TEST\TEST.vcxproj", "{9094F66C-88F7-40E5-BC1F-B984DF31365B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -87,6 +89,10 @@ Global
 		{B0650877-1488-415E-B8EC-BF7BFCE1D20D}.Debug|Win32.Build.0 = Debug|Win32
 		{B0650877-1488-415E-B8EC-BF7BFCE1D20D}.Release|Win32.ActiveCfg = Release|Win32
 		{B0650877-1488-415E-B8EC-BF7BFCE1D20D}.Release|Win32.Build.0 = Release|Win32
+		{9094F66C-88F7-40E5-BC1F-B984DF31365B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9094F66C-88F7-40E5-BC1F-B984DF31365B}.Debug|Win32.Build.0 = Debug|Win32
+		{9094F66C-88F7-40E5-BC1F-B984DF31365B}.Release|Win32.ActiveCfg = Release|Win32
+		{9094F66C-88F7-40E5-BC1F-B984DF31365B}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

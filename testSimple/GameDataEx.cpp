@@ -150,6 +150,7 @@ void CGameDataEx::ReadConfigZuoPai()
 	TCHAR szFileName[MAX_PATH] = TEXT("");
 	_sntprintf(szFileName, CountArray(szFileName), TEXT("%s\\MajiangConfig.ini"), szPath);
 	m_isOpenZuoPaiFlag = GetPrivateProfileInt(GAME_NAME, TEXT("isOpenZuoPai"), 0, szFileName);
+	m_isHasLaiZiFlag   = GetPrivateProfileInt(GAME_NAME, TEXT("isHasLaiZi"), 0, szFileName);
 	GetPrivateProfileString(GAME_NAME, TEXT("UserCard0"), _T(""), m_szPai0, sizeof(m_szPai0), szFileName);
 	GetPrivateProfileString(GAME_NAME, TEXT("UserCard1"), _T(""), m_szPai1, sizeof(m_szPai1), szFileName);
 	GetPrivateProfileString(GAME_NAME, TEXT("UserCard2"), _T(""), m_szPai2, sizeof(m_szPai2), szFileName);

@@ -13,6 +13,7 @@ public:
 public:
 	//做牌
 	int			m_isOpenZuoPaiFlag;						//做牌开关
+	int			m_isHasLaiZiFlag;						//是否含有赖子
 	TCHAR		m_szPai0[MAX_PATH];						//做牌牌值保存的数组
 	TCHAR		m_szPai1[MAX_PATH];						//做牌牌值保存的数组
 	TCHAR		m_szPai2[MAX_PATH];						//做牌牌值保存的数组
