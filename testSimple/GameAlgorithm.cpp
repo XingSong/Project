@@ -88,7 +88,7 @@ bool CGameAlgorithm::IsQiDuiHu(BYTE arrHandCardData[], int len)
 {
 	int jiang = CountPai(arrHandCardData, len, JIANG_FLAG);
 	int gang = CountPai(arrHandCardData, len, GANG_FLAG);
-	return (2 * jiang + 3 * gang == 14);
+	return (2 * jiang + 4 * gang == 14);
 }
 //判断平和
 bool CGameAlgorithm::IsPingHu(BYTE arr[], int len)
@@ -117,7 +117,7 @@ bool CGameAlgorithm::IsPingHu(BYTE arr[], int len)
 	return false;
 }
 //计算A、AA、AAA、AAAA、赖子的数量汇总，方便调用
-void CGameAlgorithm::CalKindm_tMJKindNum(BYTE arrHandCardData[], int len, CGameDataEx *m_pGameDataEx /*= nullptr*/)
+void CGameAlgorithm::CalKindMJKindNum(BYTE arrHandCardData[], int len, CGameDataEx *m_pGameDataEx /*= nullptr*/)
 {
 	m_tMJKindNum.iDanzhangNum = CountPai(arrHandCardData, len, DANZHANG_FALG, m_pGameDataEx);
 	m_tMJKindNum.iKeziNum = CountPai(arrHandCardData, len, KEZI_FLAG, m_pGameDataEx);
@@ -213,7 +213,7 @@ bool CGameAlgorithm::IsPengPengHuWithLaizi(BYTE arrHandCardData[], int len, CGam
 //判断7对
 bool CGameAlgorithm::IsQiDuiHuWithLaizi(BYTE arrHandCardData[], int len, CGameDataEx *m_pGameDataEx)
 {
-	CalKindm_tMJKindNum(arrHandCardData, len, m_pGameDataEx);
+	CalKindMJKindNum(arrHandCardData, len, m_pGameDataEx);
 	return (4 * m_tMJKindNum.iGangNum + 3 * m_tMJKindNum.iKeziNum + 2 * m_tMJKindNum.iJiangNum + m_tMJKindNum.iDanzhangNum + m_tMJKindNum.iLaiziNum == HAND_CARD_MAX_REPERTORY);
 }
 

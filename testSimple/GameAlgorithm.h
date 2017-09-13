@@ -47,7 +47,7 @@ public:
 	bool IsPingHu(BYTE arrHandCardData[], int len);
 //带赖子的试着操作
 	//计算A、AA、AAA、AAAA、赖子的数量汇总，方便调用
-	void CalKindm_tMJKindNum(BYTE arrHandCardData[], int len, CGameDataEx *m_pGameDataEx = nullptr);
+	void CalKindMJKindNum(BYTE arrHandCardData[], int len, CGameDataEx *m_pGameDataEx = nullptr);
 	//判断碰碰和
 	bool IsPengPengHuWithLaizi(BYTE arrHandCardData[], int len,CGameDataEx *m_pGameDataEx=nullptr);
 
