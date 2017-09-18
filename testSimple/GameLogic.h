@@ -17,5 +17,10 @@ public:
 	BYTE SwitchToCardData(BYTE cbCardIndex);
 	//打印显示牌值，如五筒
 	void printPai(BYTE cbCardData);
+
+	//获得花色
+	BYTE getColor(BYTE cbCardData);
+	//获得牌值
+	BYTE getCardValue(BYTE cbCardData);
 };
 

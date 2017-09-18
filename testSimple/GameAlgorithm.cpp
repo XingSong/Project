@@ -20,8 +20,30 @@ CGameAlgorithm::~CGameAlgorithm()
 {
 	CC_SAFE_DELETE(m_pGameLogic);
 }
+
+int CGameAlgorithm::CountPai(BYTE arrHandCardData[], int len, PAI_REPRESS_FLAG iFlag)
+{
+	int count = 0;
+	map<BYTE, int> mapCount;
+	for (int i = 0; i < len; i++)
+	{
+		if (mapCount.end() != mapCount.find(arrHandCardData[i]))
+			mapCount[arrHandCardData[i]]++;
+		else
+			mapCount.insert(pair<BYTE, int>(arrHandCardData[i], 1));
+	}
+
+	for (auto it : mapCount)
+	{
+		//cout << it.first << endl << it.second << endl;
+		if (iFlag == it.second)
+			count++;
+	}
+	return count;
+}
+
 //计算A、AA、AAA、AAAA的数量
-UINT CGameAlgorithm::CountPai(BYTE arrHandCardData[], int len, PAI_REPRESS_FLAG iFlag, CGameDataEx *m_pGameDataEx)
+UINT CGameAlgorithm::CountPaiWithLaizi(BYTE arrHandCardData[], int len, PAI_REPRESS_FLAG iFlag, CGameDataEx *m_pGameDataEx)
 {
 	int count = 0;
 	map<BYTE, int> mapCount;
@@ -73,12 +95,9 @@ bool CGameAlgorithm::IsPengPengHu(BYTE arrHandCardData[], int len)
 	int kezi = CountPai(arrHandCardData, len, KEZI_FLAG);
 	int gang = CountPai(arrHandCardData, len, GANG_FLAG);
 	int jiang = CountPai(arrHandCardData, len, JIANG_FLAG);
-	if (1 == jiang)
+	if (1 == jiang && 4 == kezi + gang)
 	{
-		if (4 == kezi || 4 == gang)
-			return true;
-		else
-			return false;
+		return true;
 	}
 	else
 		return false;
@@ -94,12 +113,13 @@ bool CGameAlgorithm::IsQiDuiHu(BYTE arrHandCardData[], int len)
 bool CGameAlgorithm::IsPingHu(BYTE arr[], int len)
 {
 	SortCardAsc(arr, len);
-	BYTE *set = new BYTE[len];
-	int k = 0;
+	BYTE set[HAND_CARD_MAX_REPERTORY] = { 0 };
+	
 	for (int i = 0; i < len; i++)
 	{
 		if (arr[i] == arr[i + 1])
 		{
+			int k = 0;
 			for (int j = 0; j < len; j++)
 			{
 				if (j != i&&j != i + 1)
@@ -113,16 +133,47 @@ bool CGameAlgorithm::IsPingHu(BYTE arr[], int len)
 				return true;
 		}
 	}
-	//delete []set;
+	
 	return false;
 }
+
+//判断清一色
+bool CGameAlgorithm::IsQingYiSe(BYTE arrHandCardData[], int len)
+{
+	bool result = true;
+	for (size_t i = 1; i < len; i++)
+	{
+		if (m_pGameLogic->getColor(arrHandCardData[0]) != m_pGameLogic->getColor(arrHandCardData[i]))
+		{
+			result = false;
+			break;
+		}
+	}
+	return result;
+}
+
+bool CGameAlgorithm::IsZiYiSe(BYTE arrHandCardData[], int len)
+{
+	bool result = true;
+	for (size_t i = 0; i < len; i++)
+	{
+		if (m_pGameLogic->getColor(arrHandCardData[i]) != 3)
+		{
+			result = false;
+			break;
+		}
+	
+	}
+	return result;
+}
+
 //计算A、AA、AAA、AAAA、赖子的数量汇总，方便调用
 void CGameAlgorithm::CalKindMJKindNum(BYTE arrHandCardData[], int len, CGameDataEx *m_pGameDataEx /*= nullptr*/)
 {
-	m_tMJKindNum.iDanzhangNum = CountPai(arrHandCardData, len, DANZHANG_FALG, m_pGameDataEx);
-	m_tMJKindNum.iKeziNum = CountPai(arrHandCardData, len, KEZI_FLAG, m_pGameDataEx);
-	m_tMJKindNum.iGangNum = CountPai(arrHandCardData, len, GANG_FLAG, m_pGameDataEx);
-	m_tMJKindNum.iJiangNum = CountPai(arrHandCardData, len, JIANG_FLAG, m_pGameDataEx);
+	m_tMJKindNum.iDanzhangNum = CountPaiWithLaizi(arrHandCardData, len, DANZHANG_FALG, m_pGameDataEx);
+	m_tMJKindNum.iKeziNum = CountPaiWithLaizi(arrHandCardData, len, KEZI_FLAG, m_pGameDataEx);
+	m_tMJKindNum.iGangNum = CountPaiWithLaizi(arrHandCardData, len, GANG_FLAG, m_pGameDataEx);
+	m_tMJKindNum.iJiangNum = CountPaiWithLaizi(arrHandCardData, len, JIANG_FLAG, m_pGameDataEx);
 	m_tMJKindNum.iLaiziNum = 0;
 
 	for (size_t i = 0; i < len; i++)
@@ -134,10 +185,10 @@ void CGameAlgorithm::CalKindMJKindNum(BYTE arrHandCardData[], int len, CGameData
 //判断碰碰和
 bool CGameAlgorithm::IsPengPengHuWithLaizi(BYTE arrHandCardData[], int len, CGameDataEx *m_pGameDataEx)
 {
-	int iDanzhangNum = CountPai(arrHandCardData, len, DANZHANG_FALG, m_pGameDataEx);
-	int iKeziNum = CountPai(arrHandCardData, len, KEZI_FLAG, m_pGameDataEx);
-	int iGangNum = CountPai(arrHandCardData, len, GANG_FLAG, m_pGameDataEx);
-	int iJiangNum = CountPai(arrHandCardData, len, JIANG_FLAG, m_pGameDataEx);
+	int iDanzhangNum = CountPaiWithLaizi(arrHandCardData, len, DANZHANG_FALG, m_pGameDataEx);
+	int iKeziNum = CountPaiWithLaizi(arrHandCardData, len, KEZI_FLAG, m_pGameDataEx);
+	int iGangNum = CountPaiWithLaizi(arrHandCardData, len, GANG_FLAG, m_pGameDataEx);
+	int iJiangNum = CountPaiWithLaizi(arrHandCardData, len, JIANG_FLAG, m_pGameDataEx);
 	int iLaiziNum = 0;
 
 	for (size_t i = 0; i < len; i++)

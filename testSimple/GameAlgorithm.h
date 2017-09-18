@@ -32,8 +32,9 @@ public:
 	CGameAlgorithm();
 	~CGameAlgorithm();
 	//计算A、AA、AAA、AAAA的数量
-	UINT CountPai(BYTE arrHandCardData[], int len, PAI_REPRESS_FLAG iFlag = NONE_FLAG, CGameDataEx *m_pGameDataEx=nullptr);
-
+	int CountPai(BYTE arrHandCardData[], int len,PAI_REPRESS_FLAG iFlag);
+	UINT CountPaiWithLaizi(BYTE arrHandCardData[], int len, PAI_REPRESS_FLAG iFlag, CGameDataEx *m_pGameDataEx = nullptr);
+	
 	//统计数组arrHandCardData中每个元素出现的次数,返回给countArray
 	int* CountElemCount(BYTE arrHandCardData[], int len, int countArray[]);
 //先弄不带赖子的
@@ -45,6 +46,12 @@ public:
 
 	//判断平和
 	bool IsPingHu(BYTE arrHandCardData[], int len);
+
+	//判断清一色
+	bool IsQingYiSe(BYTE arrHandCardData[], int len);
+
+	//判断字一色
+	bool IsZiYiSe(BYTE arrHandCardData[], int len);
 //带赖子的试着操作
 	//计算A、AA、AAA、AAAA、赖子的数量汇总，方便调用
 	void CalKindMJKindNum(BYTE arrHandCardData[], int len, CGameDataEx *m_pGameDataEx = nullptr);

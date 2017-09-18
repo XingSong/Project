@@ -126,3 +126,13 @@ void CGameLogic::printPai(BYTE cbCardData)
 		break;
 	}
 }
+
+BYTE CGameLogic::getColor(BYTE cbCardData)
+{
+	return (cbCardData&MASK_COLOR) >> 4;
+}
+
+BYTE CGameLogic::getCardValue(BYTE cbCardData)
+{
+	return (cbCardData&MASK_VALUE);
+}

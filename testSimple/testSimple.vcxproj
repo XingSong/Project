@@ -14,6 +14,7 @@
     <ClCompile Include="GameAlgorithm.cpp" />
     <ClCompile Include="GameDataEx.cpp" />
     <ClCompile Include="GameLogic.cpp" />
+    <ClCompile Include="InternationalMajong.cpp" />
     <ClCompile Include="majiang.cpp" />
     <ClCompile Include="RapidJson.cpp" />
     <ClCompile Include="Exampletestmajiang.cpp" />
@@ -23,6 +24,7 @@
     <ClInclude Include="GameAlgorithm.h" />
     <ClInclude Include="GameDataEx.h" />
     <ClInclude Include="GameLogic.h" />
+    <ClInclude Include="InternationalMajong.h" />
     <ClInclude Include="RapidJson.h" />
     <ClInclude Include="UpgradeMessage.h" />
   </ItemGroup>

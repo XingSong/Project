@@ -33,6 +33,9 @@
     <ClCompile Include="GameDataEx.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="InternationalMajong.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameAlgorithm.h">
@@ -51,6 +54,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="UpgradeMessage.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="InternationalMajong.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
