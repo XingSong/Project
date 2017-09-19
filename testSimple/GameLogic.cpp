@@ -1,3 +1,4 @@
+#include "CMD_Sparrow.h"
 #include "GameLogic.h"
 #include <assert.h>
 #include <iostream>
@@ -125,14 +126,4 @@ void CGameLogic::printPai(BYTE cbCardData)
 	default:
 		break;
 	}
-}
-
-BYTE CGameLogic::getColor(BYTE cbCardData)
-{
-	return (cbCardData&MASK_COLOR) >> 4;
-}
-
-BYTE CGameLogic::getCardValue(BYTE cbCardData)
-{
-	return (cbCardData&MASK_VALUE);
 }

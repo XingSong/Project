@@ -50,8 +50,6 @@ public:
 	//判断清一色
 	bool IsQingYiSe(BYTE arrHandCardData[], int len);
 
-	//判断字一色
-	bool IsZiYiSe(BYTE arrHandCardData[], int len);
 //带赖子的试着操作
 	//计算A、AA、AAA、AAAA、赖子的数量汇总，方便调用
 	void CalKindMJKindNum(BYTE arrHandCardData[], int len, CGameDataEx *m_pGameDataEx = nullptr);

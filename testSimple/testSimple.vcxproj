@@ -15,9 +15,10 @@
     <ClCompile Include="GameDataEx.cpp" />
     <ClCompile Include="GameLogic.cpp" />
     <ClCompile Include="InternationalMajong.cpp" />
-    <ClCompile Include="majiang.cpp" />
+    <ClCompile Include="majiangMain.cpp" />
     <ClCompile Include="RapidJson.cpp" />
     <ClCompile Include="Exampletestmajiang.cpp" />
+    <ClCompile Include="Test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CMD_Sparrow.h" />
@@ -26,6 +27,7 @@
     <ClInclude Include="GameLogic.h" />
     <ClInclude Include="InternationalMajong.h" />
     <ClInclude Include="RapidJson.h" />
+    <ClInclude Include="Test.h" />
     <ClInclude Include="UpgradeMessage.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

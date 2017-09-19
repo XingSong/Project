@@ -141,9 +141,9 @@ bool CGameAlgorithm::IsPingHu(BYTE arr[], int len)
 bool CGameAlgorithm::IsQingYiSe(BYTE arrHandCardData[], int len)
 {
 	bool result = true;
-	for (size_t i = 1; i < len; i++)
+	for (size_t i = 0; i < len-1; i++)
 	{
-		if (m_pGameLogic->getColor(arrHandCardData[0]) != m_pGameLogic->getColor(arrHandCardData[i]))
+		if (GetColor(arrHandCardData[i+1]) != GetColor(arrHandCardData[i]))
 		{
 			result = false;
 			break;
@@ -152,20 +152,6 @@ bool CGameAlgorithm::IsQingYiSe(BYTE arrHandCardData[], int len)
 	return result;
 }
 
-bool CGameAlgorithm::IsZiYiSe(BYTE arrHandCardData[], int len)
-{
-	bool result = true;
-	for (size_t i = 0; i < len; i++)
-	{
-		if (m_pGameLogic->getColor(arrHandCardData[i]) != 3)
-		{
-			result = false;
-			break;
-		}
-	
-	}
-	return result;
-}
 
 //计算A、AA、AAA、AAAA、赖子的数量汇总，方便调用
 void CGameAlgorithm::CalKindMJKindNum(BYTE arrHandCardData[], int len, CGameDataEx *m_pGameDataEx /*= nullptr*/)

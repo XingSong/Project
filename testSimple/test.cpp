@@ -1,193 +1,211 @@
-//#include <wchar.h>
-//#include <wtypes.h>
-//#include <iostream>
-//using namespace std;
-//
-//
-//#define MAX_SOURCE_LEN				1024								//最大长度
-//
-//void main()
-//{
-//	WCHAR szKeyBuffer[] = L"54DE";
-//	WCHAR szTempBuffer[] = L"54F0";
-//	WCHAR * pEnd = NULL;
-//	WCHAR szSrcData[MAX_SOURCE_LEN] = L"";
-//	WCHAR wKey = (WCHAR)wcstol(szKeyBuffer, &pEnd, 16);
-//	WCHAR wEncrypt = (WCHAR)wcstol(szTempBuffer, &pEnd, 16);
-////	wprintf(L"wKey=%c\nwEncrypt=%c\n", wKey, wEncrypt);// << "wKey=" << wKey << "\nwEncrypt=" << wEncrypt << endl;
-//	cout << "wKey=" << wKey << "\nwEncrypt=" << wEncrypt << endl;
-//	for (int i = 0; i < 1; i++)
-//	{
-//		szSrcData[i] = (WCHAR)((WCHAR)wKey ^ (WCHAR)wEncrypt);
-//		wcout << szSrcData[i] << endl;
-//	}
-//	
-//	system("pause");
-//}
-#include "stdio.h"
-#include "stdbool.h"
-#include <stdlib.h>
-#include <malloc.h>
+#include "Test.h"
+#include <iostream>
+using namespace std;
 
-bool check_hu(unsigned char *A, unsigned int sz);
-bool check_3n(unsigned char *set, unsigned int sz);
-bool remove_straight(unsigned char *set, unsigned int sz);
-bool remove_three_same(unsigned char *set, unsigned int sz);
-void sort_card(unsigned char *A, unsigned int sz);
-bool big_than(unsigned char a, unsigned char b);
-void dump(unsigned char *set, unsigned int sz);
-
-
-bool check_hu(unsigned char *A, unsigned int sz){
-	unsigned char *set = (unsigned char *)malloc(sizeof(char)* sz);
-	sort_card(A, sz);
-	unsigned int i = 0;
-	for (i = 0; i < sz; i++){
-		if (A[i] == A[i + 1]){
-			int k = 0;
-			for (size_t j = 0; j < sz; j++){
-				if (j != i && j != i + 1){
-					set[k] = A[j];
-					k = k + 1;
-				}
-			}
-			if (check_3n(set, sz - 2) || sz - 2 == 0){
-				return true;
-			}
-		}
-
-	}
-	free(set);
-	return false;
-}
-
-bool check_3n(unsigned char *set, unsigned int sz){
-	if (sz == 0){
-		return true;
-	}
-	int set_t[20] ={ 0 };
-	for (size_t i = 0; i < sz; i++)
-	{
-		set_t[i] = set[i];
-	}
-
-	if (remove_straight(set, sz)){
-		if (check_3n(set, sz - 3))
-		{
-			return true;
-		}
-	}
-
-	for (size_t i = 0; i < sz; i++)
-	{
-		set[i] = set_t[i];
-	}
-
-	if (remove_three_same(set, sz)){
-		if (check_3n(set, sz - 3))
-		{
-			return true;
-		}
-	}
-	return false;
-}
-
-bool remove_straight(unsigned char *set, unsigned int sz){
-	int second = 0, third = 0;
-	for (size_t i = 0; i < sz; i++)
-	{
-		if (set[i] == set[0] + 1)
-		{
-			second = i;
-		}
-		if (set[i] == set[0] + 2)
-		{
-			third = i;
-		}
-		if (set[i] > set[0] + 2)
-		{
-			break;
-		}
-		if (second != 0 && third != 0)
-		{
-			break;
-		}
-	}
-	if (second != 0 && third != 0)
-	{
-		int j = 0;
-		for (size_t i = 1; i < sz; i++)
-		{
-			if (i != second && i != third)
-			{
-				set[j] = set[i];
-				j++;
-			}
-
-		}
-		return true;
-	}
-	return false;
-}
-
-bool remove_three_same(unsigned char *set, unsigned int sz){
-	if (set[0] == set[2] && set[1] == set[0]){
-		unsigned int i = 0;
-		for (i = 0; i < sz - 3; i++){
-			set[i] = set[i + 3];
-		}
-		return true;
-	}
-	return false;
-}
-
-
-//----------------------------------------------------------------------------
-void sort_card(unsigned char *A, unsigned int sz){
-	int i = 0, j = 0;
-	int len = sz;
-	for (i = len - 1; i >= 0; i--){
-		unsigned char max = A[i];
-		int postion = i;
-		for (j = 0; j <= i; j++){
-			if (big_than(A[j], max)){
-				max = A[j];
-				postion = j;
-			}
-		}
-		unsigned char temp = A[i];
-		A[i] = max;
-		A[postion] = temp;
-	}
-}
-
-bool big_than(unsigned char a, unsigned char b){
-	if ((a & (unsigned int)0xf0) > (b & (unsigned int)0xf0)){
-		return true;
-	}
-	else if ((a & (unsigned int)0xf0) == (b & (unsigned int)0xf0)){
-		if ((a & (unsigned int)0xf) > (b & (unsigned int)0xf)){
-			return true;
-		}
-	}
-	return false;
-}
-
-
-void dump(unsigned char *set, unsigned int sz){
-	for (size_t i = 0; i < sz; i++)
-	{
-		printf("%02x ", *(set + i));
-	}
-	printf("\n");
-}
-
-void main() 
+CTest::CTest()
 {
-//	unsigned char A[17] ={ 0x11, 0x11, 0x11, 0x11, 0x12, 0x12, 0x12, 0x12, 0x13, 0x13, 0x13, 0x13, 0x14, 0x14, 0x14, 0x14, 0x15 };
-	unsigned char A[14] = { 0x21, 0x21, 0x21, 0x21, 0x12, 0x12, 0x12, 0x12, 0x13, 0x13, 0x13, 0x13, 0x14, 0x14};
-	bool hu1 = check_hu(A, 14);
-	bool hu2 = check_hu(A, 2);
-	printf("%d  %d\n", hu1, hu2);
-	system("pause");
+	memset(arrHandCardData, 0, sizeof(arrHandCardData));	
+}
+
+
+CTest::~CTest()
+{
+}
+
+void CTest::MainTest()
+{
+	gameData.ReadConfigZuoPai();
+	gameData.ZuoPai();
+
+	memcpy(arrHandCardData, gameData.m_tMatchMJ.byArHandPai[0], HAND_CARD_MAX_REPERTORY);
+	objAlgorithm.SortCardAsc(arrHandCardData, HAND_CARD_MAX_REPERTORY);
+	for (int i = 0; i < HAND_CARD_MAX_REPERTORY; i++)
+	{
+		cout << (int)arrHandCardData[i] << ",";
+	}
+	cout << endl;
+	for (int i = 0; i < HAND_CARD_MAX_REPERTORY; i++)
+	{
+		BYTE tmp = ByteToHexChar(arrHandCardData[i]);
+		objAlgorithm.m_pGameLogic->printPai(tmp);
+		cout << " ";
+	}
+	cout << endl;
+	for (size_t i = 0; i < HAND_CARD_MAX_REPERTORY; i++)
+		arrHandCardData[i] = ByteToHexChar(arrHandCardData[i]);
+
+	//简单胡 test
+	//TestSimpleHu();
+	if (gameData.m_isHasLaiZiFlag <= 0)
+	{
+		bool bTagPingHu = objAlgorithm.IsPingHu(arrHandCardData, HAND_CARD_MAX_REPERTORY);
+		if (bTagPingHu)
+		{
+			cout << "平和" << endl;
+			//88番 test
+			//Test88Fan();
+			//64番 test
+			//Test64Fan();
+			//48番 test
+			//Test48Fan();
+			//32番 test
+			Test32Fan();
+		}
+		else
+			cout << "不是平和" << endl;
+	}
+
+}
+
+void CTest::TestSimpleHu()
+{
+	if (gameData.m_isHasLaiZiFlag <= 0)
+	{
+		bool bTagPingHu = objAlgorithm.IsPingHu(arrHandCardData, HAND_CARD_MAX_REPERTORY);
+		if (bTagPingHu)
+			cout << "平和" << endl;
+		else
+			cout << "不是平和" << endl;
+		bool bTagIsPengPengHu = objAlgorithm.IsPengPengHu(arrHandCardData, HAND_CARD_MAX_REPERTORY);
+		if (bTagIsPengPengHu)
+			cout << "碰碰和" << endl;
+		else
+			cout << "不是碰碰和" << endl;
+		bool bTagIsQiDuiHu = objAlgorithm.IsQiDuiHu(arrHandCardData, HAND_CARD_MAX_REPERTORY);
+		if (bTagIsPengPengHu)
+			cout << "7对" << endl;
+		else
+			cout << "不是7对" << endl;
+		bool bTagIsQingYiSe = objAlgorithm.IsQingYiSe(arrHandCardData, HAND_CARD_MAX_REPERTORY);
+		if (bTagIsQingYiSe)
+		{
+			if (bTagPingHu)
+			{
+				cout << "清一色平和" << endl;
+			}
+			else
+				cout << "清一色假和" << endl;
+		}
+		else
+			cout << "不是清一色" << endl;
+
+	}
+	else
+	{
+		BYTE tmpLaizi = ByteToHexChar(gameData.byLaiZiCard);
+		cout << "赖子值: ";
+		objAlgorithm.m_pGameLogic->printPai(tmpLaizi);
+		cout << endl;
+		bool bTagIsPengPengHu = objAlgorithm.IsPengPengHuWithLaizi(arrHandCardData, HAND_CARD_MAX_REPERTORY, &gameData);
+		if (bTagIsPengPengHu)
+			cout << "碰碰和" << endl;
+		else
+			cout << "不是碰碰和" << endl;
+		bool bTagIsQiDuiHuWithLaizi = objAlgorithm.IsQiDuiHuWithLaizi(arrHandCardData, HAND_CARD_MAX_REPERTORY, &gameData);
+		if (bTagIsQiDuiHuWithLaizi)
+			cout << "7对" << endl;
+		else
+			cout << "不是7对" << endl;
+	}
+}
+
+void CTest::Test88Fan()
+{
+	bool b = objInternationalMajong.CheckDASIXI(arrHandCardData, HAND_CARD_MAX_REPERTORY);
+	if (b)
+		cout << "大四喜" << endl;
+	else
+		cout << "不是大四喜" << endl;
+
+	bool bDaSanYuan = objInternationalMajong.CheckDASANYUAN(arrHandCardData, HAND_CARD_MAX_REPERTORY);
+	if (bDaSanYuan)
+		cout << "大三元" << endl;
+	else
+		cout << "不是大三元" << endl;
+
+	bool bCheckLVYISE = objInternationalMajong.CheckLVYISE(arrHandCardData, HAND_CARD_MAX_REPERTORY);
+	if (bCheckLVYISE)
+		cout << "绿一色" << endl;
+	else
+		cout << "不是绿一色" << endl;
+	bool bCheckJIULIANBAODENG = objInternationalMajong.CheckJIULIANBAODENG(arrHandCardData, HAND_CARD_MAX_REPERTORY);
+	if (bCheckJIULIANBAODENG)
+		cout << "九莲宝灯" << endl;
+	else
+		cout << "不是九莲宝灯" << endl;
+	bool bCheckLIANJIDUI = objInternationalMajong.CheckLIANQIDUI(arrHandCardData, HAND_CARD_MAX_REPERTORY);
+	if (bCheckLIANJIDUI)
+		cout << "连七对" << endl;
+	else
+		cout << "不是连七对" << endl;
+
+	bool bCheckSHISANYAO = objInternationalMajong.CheckSHISANYAO(arrHandCardData, HAND_CARD_MAX_REPERTORY);
+	if (bCheckSHISANYAO)
+		cout << "十三幺" << endl;
+	else
+		cout << "不是十三幺" << endl;
+}
+
+void CTest::Test64Fan()
+{
+	bool bCheckQINGYAOJIU = objInternationalMajong.CheckQINGYAOJIU(arrHandCardData, HAND_CARD_MAX_REPERTORY);
+	if (bCheckQINGYAOJIU)
+		cout << "清幺九" << endl;
+	else
+		cout << "不是清幺九" << endl;
+
+	bool bCheckXIAOSIXI = objInternationalMajong.CheckXIAOSIXI(arrHandCardData, HAND_CARD_MAX_REPERTORY);
+	if (bCheckXIAOSIXI)
+		cout << "小四喜" << endl;
+	else
+		cout << "不是小四喜" << endl;
+
+	bool bCheckXIAOSANYUAN = objInternationalMajong.CheckXIAOSANYUAN(arrHandCardData, HAND_CARD_MAX_REPERTORY);
+	if (bCheckXIAOSANYUAN)
+		cout << "小三元" << endl;
+	else
+		cout << "不是小三元" << endl;
+
+	bool bCheckYISESHUANGLONGHUI = objInternationalMajong.CheckYISESHUANGLONGHUI(arrHandCardData, HAND_CARD_MAX_REPERTORY);
+	if (bCheckYISESHUANGLONGHUI)
+		cout << "一色双龙会" << endl;
+	else
+		cout << "不是一色双龙会" << endl;
+}
+
+void CTest::Test48Fan()
+{
+	bool bCheckYISESIJIEGAO = objInternationalMajong.CheckYISESIJIEGAO(arrHandCardData, HAND_CARD_MAX_REPERTORY);
+	if (bCheckYISESIJIEGAO)
+		cout << "一色四节高" << endl;
+	else
+		cout << "不是一色四节高" << endl;
+	bool bCheckYISESITONGSHUN = objInternationalMajong.CheckYISESITONGSHUN(arrHandCardData, HAND_CARD_MAX_REPERTORY);
+	if (bCheckYISESITONGSHUN)
+		cout << "一色四同顺" << endl;
+	else
+		cout << "不是一色四同顺" << endl;
+
+}
+
+void CTest::Test32Fan()
+{
+	bool bCheckYISESIBUGAO = objInternationalMajong.CheckYISESIBUGAO(arrHandCardData, HAND_CARD_MAX_REPERTORY);
+	if (bCheckYISESIBUGAO)
+		cout << "一色四步高" << endl;
+	else
+		cout << "不是一色四步高" << endl;
+
+	bool bCheckSANGANG = objInternationalMajong.CheckSANGANG(arrHandCardData, HAND_CARD_MAX_REPERTORY);
+	if (bCheckSANGANG)
+		cout << "三杠" << endl;
+	else
+		cout << "不是三杠" << endl;
+
+	bool bCheckHUNYAOJIU = objInternationalMajong.CheckHUNYAOJIU(arrHandCardData, HAND_CARD_MAX_REPERTORY);
+	if (bCheckHUNYAOJIU)
+		cout << "混幺九" << endl;
+	else
+		cout << "不是混幺九" << endl;
+
 }
