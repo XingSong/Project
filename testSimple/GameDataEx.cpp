@@ -79,7 +79,7 @@ void CGameDataEx::ZuoPai()
 
 }
 
-void CGameDataEx::ZuoPaiRoll(TCHAR *m_szPai, int len, int index)
+void CGameDataEx::ZuoPaiRoll(TCHAR *m_szPai, size_t len, int index)
 {
 	//char tmpPai[MAX_PATH];
 	//memset(tmpPai, 0, sizeof(tmpPai));
@@ -106,7 +106,7 @@ void CGameDataEx::ZuoPaiRoll(TCHAR *m_szPai, int len, int index)
 		tmpCardData[i] = tmpCardData[i] + (ConvertHexChar(tmpByte) & 0xF);//取低4位然后相加。
 	}
 
-	for (int i = 0; i < len; i++)
+	for (size_t i = 0; i < len; i++)
 	{
 		m_tMatchMJ.byArHandPai[index][i] = tmpCardData[i] / BASE_DECIMAL * 10 + tmpCardData[i] % BASE_DECIMAL;
 	}

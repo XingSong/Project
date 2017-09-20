@@ -21,11 +21,11 @@ CGameAlgorithm::~CGameAlgorithm()
 	CC_SAFE_DELETE(m_pGameLogic);
 }
 
-int CGameAlgorithm::CountPai(BYTE arrHandCardData[], int len, PAI_REPRESS_FLAG iFlag)
+int CGameAlgorithm::CountPai(BYTE arrHandCardData[], size_t len, PAI_REPRESS_FLAG iFlag)
 {
 	int count = 0;
 	map<BYTE, int> mapCount;
-	for (int i = 0; i < len; i++)
+	for (size_t i = 0; i < len; i++)
 	{
 		if (mapCount.end() != mapCount.find(arrHandCardData[i]))
 			mapCount[arrHandCardData[i]]++;
@@ -43,11 +43,11 @@ int CGameAlgorithm::CountPai(BYTE arrHandCardData[], int len, PAI_REPRESS_FLAG i
 }
 
 //计算A、AA、AAA、AAAA的数量
-UINT CGameAlgorithm::CountPaiWithLaizi(BYTE arrHandCardData[], int len, PAI_REPRESS_FLAG iFlag, CGameDataEx *m_pGameDataEx)
+UINT CGameAlgorithm::CountPaiWithLaizi(BYTE arrHandCardData[], size_t len, PAI_REPRESS_FLAG iFlag, CGameDataEx *m_pGameDataEx)
 {
 	int count = 0;
 	map<BYTE, int> mapCount;
-	for (int i = 0; i < len; i++)
+	for (size_t i = 0; i < len; i++)
 	{
 		if (mapCount.end() != mapCount.find(arrHandCardData[i]))
 			mapCount[arrHandCardData[i]]++;
@@ -66,15 +66,15 @@ UINT CGameAlgorithm::CountPaiWithLaizi(BYTE arrHandCardData[], int len, PAI_REPR
 	return count;
 }
 
-int* CGameAlgorithm::CountElemCount(BYTE arrHandCardData[], int len, int countArray[])
+int* CGameAlgorithm::CountElemCount(BYTE arrHandCardData[], size_t len, int countArray[])
 {
 	int count;
 
 	memset(countArray, -1, sizeof(countArray));
-	for (int i = 0; i < len; i++)
+	for (size_t i = 0; i < len; i++)
 	{
 		count = 1;
-		for (int j = i + 1; j < len; j++)
+		for (size_t j = i + 1; j < len; j++)
 		{
 			if (arrHandCardData[i] == arrHandCardData[j])
 			{
@@ -90,7 +90,7 @@ int* CGameAlgorithm::CountElemCount(BYTE arrHandCardData[], int len, int countAr
 	return countArray;
 }
 //判断碰碰和
-bool CGameAlgorithm::IsPengPengHu(BYTE arrHandCardData[], int len)
+bool CGameAlgorithm::IsPengPengHu(BYTE arrHandCardData[], size_t len)
 {
 	int kezi = CountPai(arrHandCardData, len, KEZI_FLAG);
 	int gang = CountPai(arrHandCardData, len, GANG_FLAG);
@@ -103,24 +103,24 @@ bool CGameAlgorithm::IsPengPengHu(BYTE arrHandCardData[], int len)
 		return false;
 }
 //判断7对
-bool CGameAlgorithm::IsQiDuiHu(BYTE arrHandCardData[], int len)
+bool CGameAlgorithm::IsQiDuiHu(BYTE arrHandCardData[], size_t len)
 {
 	int jiang = CountPai(arrHandCardData, len, JIANG_FLAG);
 	int gang = CountPai(arrHandCardData, len, GANG_FLAG);
 	return (2 * jiang + 4 * gang == 14);
 }
 //判断平和
-bool CGameAlgorithm::IsPingHu(BYTE arr[], int len)
+bool CGameAlgorithm::IsPingHu(BYTE arr[], size_t len)
 {
 	SortCardAsc(arr, len);
 	BYTE set[HAND_CARD_MAX_REPERTORY] = { 0 };
 	
-	for (int i = 0; i < len; i++)
+	for (size_t i = 0; i < len; i++)
 	{
 		if (arr[i] == arr[i + 1])
 		{
 			int k = 0;
-			for (int j = 0; j < len; j++)
+			for (size_t j = 0; j < len; j++)
 			{
 				if (j != i&&j != i + 1)
 				{
@@ -138,7 +138,7 @@ bool CGameAlgorithm::IsPingHu(BYTE arr[], int len)
 }
 
 //判断清一色
-bool CGameAlgorithm::IsQingYiSe(BYTE arrHandCardData[], int len)
+bool CGameAlgorithm::IsQingYiSe(BYTE arrHandCardData[], size_t len)
 {
 	bool result = true;
 	for (size_t i = 0; i < len-1; i++)
@@ -154,7 +154,7 @@ bool CGameAlgorithm::IsQingYiSe(BYTE arrHandCardData[], int len)
 
 
 //计算A、AA、AAA、AAAA、赖子的数量汇总，方便调用
-void CGameAlgorithm::CalKindMJKindNum(BYTE arrHandCardData[], int len, CGameDataEx *m_pGameDataEx /*= nullptr*/)
+void CGameAlgorithm::CalKindMJKindNum(BYTE arrHandCardData[], size_t len, CGameDataEx *m_pGameDataEx /*= nullptr*/)
 {
 	m_tMJKindNum.iDanzhangNum = CountPaiWithLaizi(arrHandCardData, len, DANZHANG_FALG, m_pGameDataEx);
 	m_tMJKindNum.iKeziNum = CountPaiWithLaizi(arrHandCardData, len, KEZI_FLAG, m_pGameDataEx);
@@ -169,7 +169,7 @@ void CGameAlgorithm::CalKindMJKindNum(BYTE arrHandCardData[], int len, CGameData
 	}
 }
 //判断碰碰和
-bool CGameAlgorithm::IsPengPengHuWithLaizi(BYTE arrHandCardData[], int len, CGameDataEx *m_pGameDataEx)
+bool CGameAlgorithm::IsPengPengHuWithLaizi(BYTE arrHandCardData[], size_t len, CGameDataEx *m_pGameDataEx)
 {
 	int iDanzhangNum = CountPaiWithLaizi(arrHandCardData, len, DANZHANG_FALG, m_pGameDataEx);
 	int iKeziNum = CountPaiWithLaizi(arrHandCardData, len, KEZI_FLAG, m_pGameDataEx);
@@ -248,24 +248,24 @@ bool CGameAlgorithm::IsPengPengHuWithLaizi(BYTE arrHandCardData[], int len, CGam
 }
 
 //判断7对
-bool CGameAlgorithm::IsQiDuiHuWithLaizi(BYTE arrHandCardData[], int len, CGameDataEx *m_pGameDataEx)
+bool CGameAlgorithm::IsQiDuiHuWithLaizi(BYTE arrHandCardData[], size_t len, CGameDataEx *m_pGameDataEx)
 {
 	CalKindMJKindNum(arrHandCardData, len, m_pGameDataEx);
 	return (4 * m_tMJKindNum.iGangNum + 3 * m_tMJKindNum.iKeziNum + 2 * m_tMJKindNum.iJiangNum + m_tMJKindNum.iDanzhangNum + m_tMJKindNum.iLaiziNum == HAND_CARD_MAX_REPERTORY);
 }
 
 //这个比较复杂
-bool CGameAlgorithm::IsPingHuWithLaizi(BYTE arrHandCardData[], int len, CGameDataEx *m_pGameDataEx)
+bool CGameAlgorithm::IsPingHuWithLaizi(BYTE arrHandCardData[], size_t len, CGameDataEx *m_pGameDataEx)
 {
 
 	return false;
 }
 //检测是否满足N * ABC + M *DDD
-bool CGameAlgorithm::Check_3n(BYTE arr[], int len)
+bool CGameAlgorithm::Check_3n(BYTE arr[], size_t len)
 {
 	if (len == 0) return true;
 	BYTE set_t[HAND_CARD_MAX_REPERTORY + 6] = { 0 };
-	for (int i = 0; i < len; i++)
+	for (size_t i = 0; i < len; i++)
 		set_t[i] = arr[i];
 
 	if (RemoveABC(arr, len))
@@ -284,7 +284,7 @@ bool CGameAlgorithm::Check_3n(BYTE arr[], int len)
 	return false;
 }
 //删除顺子
-bool CGameAlgorithm::RemoveABC(BYTE arr[], int len)
+bool CGameAlgorithm::RemoveABC(BYTE arr[], size_t len)
 {
 	size_t second = 0, third = 0;
 	for (size_t i = 0; i < len; i++)
@@ -314,7 +314,7 @@ bool CGameAlgorithm::RemoveABC(BYTE arr[], int len)
 	return false;
 }
 //删除刻子
-bool CGameAlgorithm::RemoveAAA(BYTE arr[], int len)
+bool CGameAlgorithm::RemoveAAA(BYTE arr[], size_t len)
 {
 
 	if (arr[0] == arr[1] && arr[0] == arr[2])
@@ -359,3 +359,4 @@ bool CGameAlgorithm::MaxValue(BYTE a, BYTE b)
 	}
 	return false;
 }
+

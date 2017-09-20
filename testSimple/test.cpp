@@ -38,21 +38,16 @@ void CTest::MainTest()
 	//TestSimpleHu();
 	if (gameData.m_isHasLaiZiFlag <= 0)
 	{
-		bool bTagPingHu = objAlgorithm.IsPingHu(arrHandCardData, HAND_CARD_MAX_REPERTORY);
-		if (bTagPingHu)
-		{
-			cout << "平和" << endl;
-			//88番 test
-			//Test88Fan();
-			//64番 test
-			//Test64Fan();
-			//48番 test
-			//Test48Fan();
-			//32番 test
-			Test32Fan();
-		}
-		else
-			cout << "不是平和" << endl;
+
+		//88番 test
+		//Test88Fan();
+		//64番 test
+		//Test64Fan();
+		//48番 test
+		//Test48Fan();
+		//32番 test
+		Test32Fan();
+
 	}
 
 }
@@ -190,22 +185,33 @@ void CTest::Test48Fan()
 
 void CTest::Test32Fan()
 {
-	bool bCheckYISESIBUGAO = objInternationalMajong.CheckYISESIBUGAO(arrHandCardData, HAND_CARD_MAX_REPERTORY);
-	if (bCheckYISESIBUGAO)
-		cout << "一色四步高" << endl;
-	else
-		cout << "不是一色四步高" << endl;
+	//bool bCheckYISESIBUGAO = objInternationalMajong.CheckYISESIBUGAO(arrHandCardData, HAND_CARD_MAX_REPERTORY);
+	//if (bCheckYISESIBUGAO)
+	//	cout << "一色四步高" << endl;
+	//else
+	//	cout << "不是一色四步高" << endl;
 
-	bool bCheckSANGANG = objInternationalMajong.CheckSANGANG(arrHandCardData, HAND_CARD_MAX_REPERTORY);
-	if (bCheckSANGANG)
-		cout << "三杠" << endl;
-	else
-		cout << "不是三杠" << endl;
+	//bool bCheckSANGANG = objInternationalMajong.CheckSANGANG(arrHandCardData, HAND_CARD_MAX_REPERTORY);
+	//if (bCheckSANGANG)
+	//	cout << "三杠" << endl;
+	//else
+	//	cout << "不是三杠" << endl;
 
-	bool bCheckHUNYAOJIU = objInternationalMajong.CheckHUNYAOJIU(arrHandCardData, HAND_CARD_MAX_REPERTORY);
-	if (bCheckHUNYAOJIU)
-		cout << "混幺九" << endl;
-	else
-		cout << "不是混幺九" << endl;
+	//bool bCheckHUNYAOJIU = objInternationalMajong.CheckHUNYAOJIU(arrHandCardData, HAND_CARD_MAX_REPERTORY);
+	//if (bCheckHUNYAOJIU)
+	//	cout << "混幺九" << endl;
+	//else
+	//	cout << "不是混幺九" << endl;
 
+	//bool bCheckQIXINGBUKAO = objInternationalMajong.CheckQIXINGBUKAO(arrHandCardData, HAND_CARD_MAX_REPERTORY);
+	//if (bCheckQIXINGBUKAO)
+	//	cout << "七星不靠" << endl;
+	//else
+	//	cout << "不是七星不靠" << endl;
+
+	bool bCheckYISESANTONGSHUN = objInternationalMajong.CheckYISESANTONGSHUN(arrHandCardData, HAND_CARD_MAX_REPERTORY);
+	if (bCheckYISESANTONGSHUN)
+		cout << "一色三同顺" << endl;
+	else
+		cout << "不是一色三同顺" << endl;
 }

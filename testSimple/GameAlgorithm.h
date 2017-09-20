@@ -32,35 +32,35 @@ public:
 	CGameAlgorithm();
 	~CGameAlgorithm();
 	//计算A、AA、AAA、AAAA的数量
-	int CountPai(BYTE arrHandCardData[], int len,PAI_REPRESS_FLAG iFlag);
-	UINT CountPaiWithLaizi(BYTE arrHandCardData[], int len, PAI_REPRESS_FLAG iFlag, CGameDataEx *m_pGameDataEx = nullptr);
+	int CountPai(BYTE arrHandCardData[], size_t len,PAI_REPRESS_FLAG iFlag);
+	UINT CountPaiWithLaizi(BYTE arrHandCardData[], size_t len, PAI_REPRESS_FLAG iFlag, CGameDataEx *m_pGameDataEx = nullptr);
 	
 	//统计数组arrHandCardData中每个元素出现的次数,返回给countArray
-	int* CountElemCount(BYTE arrHandCardData[], int len, int countArray[]);
+	int* CountElemCount(BYTE arrHandCardData[], size_t len, int countArray[]);
 //先弄不带赖子的
 	//判断碰碰和
-	bool IsPengPengHu(BYTE arrHandCardData[], int len);
+	bool IsPengPengHu(BYTE arrHandCardData[], size_t len);
 
 	//判断7对
-	bool IsQiDuiHu(BYTE arrHandCardData[], int len);
+	bool IsQiDuiHu(BYTE arrHandCardData[], size_t len);
 
 	//判断平和
-	bool IsPingHu(BYTE arrHandCardData[], int len);
+	bool IsPingHu(BYTE arrHandCardData[], size_t len);
 
 	//判断清一色
-	bool IsQingYiSe(BYTE arrHandCardData[], int len);
+	bool IsQingYiSe(BYTE arrHandCardData[], size_t len);
 
 //带赖子的试着操作
 	//计算A、AA、AAA、AAAA、赖子的数量汇总，方便调用
-	void CalKindMJKindNum(BYTE arrHandCardData[], int len, CGameDataEx *m_pGameDataEx = nullptr);
+	void CalKindMJKindNum(BYTE arrHandCardData[], size_t len, CGameDataEx *m_pGameDataEx = nullptr);
 	//判断碰碰和
-	bool IsPengPengHuWithLaizi(BYTE arrHandCardData[], int len,CGameDataEx *m_pGameDataEx=nullptr);
+	bool IsPengPengHuWithLaizi(BYTE arrHandCardData[], size_t len,CGameDataEx *m_pGameDataEx=nullptr);
 
 	//判断7对
-	bool IsQiDuiHuWithLaizi(BYTE arrHandCardData[], int len, CGameDataEx *m_pGameDataEx = nullptr);
+	bool IsQiDuiHuWithLaizi(BYTE arrHandCardData[], size_t len, CGameDataEx *m_pGameDataEx = nullptr);
 
 	//判断平和
-	bool IsPingHuWithLaizi(BYTE arrHandCardData[], int len, CGameDataEx *m_pGameDataEx);
+	bool IsPingHuWithLaizi(BYTE arrHandCardData[], size_t len, CGameDataEx *m_pGameDataEx);
 
 	//按花色、牌值升序排序
 	void SortCardAsc(BYTE arr[], int len);
@@ -69,12 +69,12 @@ public:
 	bool MaxValue(BYTE a, BYTE b);
 public:
 	//检测是否满足N * ABC + M *DDD
-	bool Check_3n(BYTE arr[], int len);
+	bool Check_3n(BYTE arr[], size_t len);
 
 	//删除顺子 
-	bool RemoveABC(BYTE arr[], int len);
+	bool RemoveABC(BYTE arr[], size_t len);
 
 	//删除刻子 
-	bool RemoveAAA(BYTE arr[], int len);
+	bool RemoveAAA(BYTE arr[], size_t len);
 };
 

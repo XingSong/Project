@@ -36,7 +36,7 @@ public:
 	char* find(char a[], char b[]);
 	void del(char a[], char b[]);
 	void ZuoPai();
-	void ZuoPaiRoll(TCHAR *m_szPai, int len, int index);
+	void ZuoPaiRoll(TCHAR *m_szPai, size_t len, int index);
 	void ZuoPaiLaizi(TCHAR *m_szPai, LaiziKind lzkind);
 	void ReadConfigZuoPai();
 };

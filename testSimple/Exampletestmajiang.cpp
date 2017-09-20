@@ -136,7 +136,7 @@ bool remove_three_same(unsigned char *set, unsigned int sz) {
 //----------------------------------------------------------------------------
 void sort_card(unsigned char *A, unsigned int sz) {
 	int i = 0, j = 0;
-	int len = sz;
+	size_t len = sz;
 	for (i = len - 1; i >= 0; i--) {
 		unsigned char max = A[i];
 		int postion = i;
