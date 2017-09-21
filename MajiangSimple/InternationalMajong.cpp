@@ -455,9 +455,9 @@ bool InternationalMajong::CheckQINGYISE(BYTE arrHandCardData[], size_t len)
 bool InternationalMajong::CheckYISESANTONGSHUN(BYTE arrHandCardData[], size_t len)
 {
 	BYTE tmpHandCardData[HAND_CARD_MAX_REPERTORY - JIANG_FLAG] = { 0 };
-	size_t tmpLen = sizeof(tmpHandCardData) / sizeof(tmpHandCardData[0]);
+	size_t tmpLen = CountArray(tmpHandCardData);
 	BYTE tmpHandCardDataKezi[HAND_CARD_MAX_REPERTORY - JIANG_FLAG - KEZI_FLAG] = { 0 };
-	size_t tmpLenKezi = sizeof(tmpHandCardDataKezi) / sizeof(tmpHandCardDataKezi[0]);
+	size_t tmpLenKezi = CountArray(tmpHandCardDataKezi);
 
 	m_byKeziNum = m_pGameAlgorithm->CountPai(arrHandCardData, len, KEZI_FLAG);
 	if (m_byKeziNum != 3)
@@ -479,7 +479,7 @@ bool InternationalMajong::CheckYISESANTONGSHUN(BYTE arrHandCardData[], size_t le
 			continue;
 		tmpHandCardDataKezi[j++] = tmpHandCardData[i];
 	}
-
+	//剩下的就是所需要的
 	for (size_t i = 0; i < tmpLenKezi - 3; i++)
 	{
 		if (tmpHandCardDataKezi[i + 3] - tmpHandCardDataKezi[i] != 1)
@@ -492,23 +492,82 @@ bool InternationalMajong::CheckYISESANTONGSHUN(BYTE arrHandCardData[], size_t le
 //一色三节高：和牌时有一种花色3副依次递增一位数字的刻子。不计一色三同顺
 bool InternationalMajong::CheckYISESANJIEGAO(BYTE arrHandCardData[], size_t len)
 {
-	return false;
+	BYTE tmpHandCardData[HAND_CARD_MAX_REPERTORY - 2] = { 0 };
+	size_t tmpLen = CountArray(tmpHandCardData);
+	BYTE tmpHandCardDataKezi[HAND_CARD_MAX_REPERTORY - JIANG_FLAG - KEZI_FLAG] = { 0 };
+	size_t tmpLenKezi = CountArray(tmpHandCardDataKezi);
+	for (size_t i = 0,j = 0; i < len,j < tmpLen; i++)
+	{
+		if (CountEachPaiNum(arrHandCardData,len,arrHandCardData[i]) == 2)
+			continue;
+		tmpHandCardData[j++] = arrHandCardData[i];
+	}
+	//移走不符合要求的那组刻子,先让那组刻子牌值置为0，再移除掉
+	for (size_t i = 0,j = 0; i < tmpLen - 3,j < tmpLenKezi; i++)
+	{
+		if (CountEachPaiNum(tmpHandCardData, tmpLen, tmpHandCardData[i]) == KEZI_FLAG && tmpHandCardData[i + 3] - tmpHandCardData[i] != 1)
+			tmpHandCardData[i + 3] = 0;
+		if (tmpHandCardData[i]!=0)
+			tmpHandCardDataKezi[j++] = tmpHandCardData[i];
+	}
+	//剩下的就是所需要的
+	for (size_t i = 0; i < tmpLenKezi - 3; i++)
+	{
+		if (tmpHandCardDataKezi[i + 3] - tmpHandCardDataKezi[i] != 1)
+			return false;
+	}
+
+	return true;
 }
 
 //全大：由序数牌789组成的顺子、刻子（杠）、将牌的和牌。不计无字
 bool InternationalMajong::CheckQUANDA(BYTE arrHandCardData[], size_t len)
 {
-	return false;
+	for (size_t i = 0; i < len; i++)
+	{
+		if (GetColor(arrHandCardData[i]) == 3 || (GetCardValue(arrHandCardData[i]) != 7 && GetCardValue(arrHandCardData[i]) != 8 && GetCardValue(arrHandCardData[i]) != 9))
+			return false;
+	}
+	return true;
 }
 
 //全中：由序数牌456组成的顺子、刻子（杠）、将牌的和牌。不计断幺
 bool InternationalMajong::CheckQUANZHONG(BYTE arrHandCardData[], size_t len)
 {
-	return false;
+	for (size_t i = 0; i < len; i++)
+	{
+		if (GetColor(arrHandCardData[i]) == 3 || (GetCardValue(arrHandCardData[i]) != 4 && GetCardValue(arrHandCardData[i]) != 5 && GetCardValue(arrHandCardData[i]) != 6))
+			return false;
+	}
+	return true;
 }
 
 //全小：由序数牌123组成的顺子、刻子（杠）、将牌的和牌。不计无字
 bool InternationalMajong::CheckQUANXIAO(BYTE arrHandCardData[], size_t len)
 {
-	return false;
+	for (size_t i = 0; i < len; i++)
+	{
+		if (GetColor(arrHandCardData[i]) == 3 || (GetCardValue(arrHandCardData[i]) != 1 && GetCardValue(arrHandCardData[i]) != 2 && GetCardValue(arrHandCardData[i]) != 3))
+			return false;
+	}
+	return true;
+}
+
+//全不靠（十三烂）
+bool InternationalMajong::CheckQuanBuKao(BYTE arrHandCardData[], size_t len)
+{
+	for (size_t i = 0; i < len; i++)
+	{
+		if (CountEachPaiNum(arrHandCardData, len, arrHandCardData[i])>1)
+			return false;
+		if (GetColor(arrHandCardData[i]) != 3)
+		{
+			if (GetColor(arrHandCardData[i]) == GetColor(arrHandCardData[i + 1]))
+			{
+				if (arrHandCardData[i + 1] - arrHandCardData[i] != 3 && arrHandCardData[i + 1] - arrHandCardData[i] != 6)
+					return false;
+			}
+		}
+	}
+	return true;
 }

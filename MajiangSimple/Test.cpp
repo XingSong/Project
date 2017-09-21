@@ -46,8 +46,10 @@ void CTest::MainTest()
 		//48番 test
 		//Test48Fan();
 		//32番 test
-		Test32Fan();
-
+		//Test32Fan();
+		//24番 test
+		Test24Fan();
+	
 	}
 
 }
@@ -203,6 +205,11 @@ void CTest::Test32Fan()
 	//else
 	//	cout << "不是混幺九" << endl;
 
+}
+
+void CTest::Test24Fan()
+{
+
 	//bool bCheckQIXINGBUKAO = objInternationalMajong.CheckQIXINGBUKAO(arrHandCardData, HAND_CARD_MAX_REPERTORY);
 	//if (bCheckQIXINGBUKAO)
 	//	cout << "七星不靠" << endl;
@@ -214,4 +221,20 @@ void CTest::Test32Fan()
 		cout << "一色三同顺" << endl;
 	else
 		cout << "不是一色三同顺" << endl;
+	bool bCheckYISESANJIEGAO = objInternationalMajong.CheckYISESANJIEGAO(arrHandCardData, HAND_CARD_MAX_REPERTORY);
+	if (bCheckYISESANJIEGAO)
+		cout << "一色三节高" << endl;
+	else
+		cout << "不是一色三节高" << endl;
+	bool bCheckQUANDA = objInternationalMajong.CheckQUANDA(arrHandCardData, HAND_CARD_MAX_REPERTORY);
+	if (bCheckQUANDA)
+		cout << "全大" << endl;
+	else
+		cout << "不是全大" << endl;
+	bool bCheckQuanBuKao = objInternationalMajong.CheckQuanBuKao(arrHandCardData, HAND_CARD_MAX_REPERTORY);
+	if (bCheckQuanBuKao)
+		cout << "全不靠" << endl;
+	else
+		cout << "不是全不靠" << endl;
+
 }

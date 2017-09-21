@@ -20,6 +20,7 @@ public:
 	void Test64Fan();
 	void Test48Fan();
 	void Test32Fan();
+	void Test24Fan();
 
 	//27->0x27,ÅÆÖµ×ª»»
 	inline BYTE ByteToHexChar(BYTE pai)

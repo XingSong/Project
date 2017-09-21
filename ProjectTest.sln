@@ -27,7 +27,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Proxy", "Proxy\Proxy.vcxpro
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "rapidJsonTest", "rapidJsonTest\rapidJsonTest.vcxproj", "{D5075CF5-17BC-4032-AE18-A0711B0B7B0A}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "testSimple", "testSimple\testSimple.vcxproj", "{B0650877-1488-415E-B8EC-BF7BFCE1D20D}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MajiangSimple", "MajiangSimple\MajiangSimple.vcxproj", "{B0650877-1488-415E-B8EC-BF7BFCE1D20D}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TEST", "TEST\TEST.vcxproj", "{9094F66C-88F7-40E5-BC1F-B984DF31365B}"
 EndProject

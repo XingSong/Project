@@ -87,9 +87,6 @@ public:
 
 	//连七对：由一种花色序数牌组成序数相连的7个对子的和牌。不计清一色、不求人、单钓
 	bool CheckLIANQIDUI(BYTE arrHandCardData[], size_t len);
-
-	//十三幺：3种序数牌的一、九牌，7种字牌共13张中的12个单张及另外一对作将组成的和牌。不计五门齐、不求人、单钓
-	bool CheckSHISANYAO(BYTE arrHandCardData[], size_t len);
 	
 	//64番
 	//清幺九：由序数牌一、九刻子（杠）、将牌组成的和牌。不计碰碰和、同刻、无字。
@@ -128,9 +125,6 @@ public:
 	//七对：由7个对子组成的和牌。不计不求人、单钓。
 	bool CheckQIDUI(BYTE arrHandCardData[], size_t len);
 
-	//七星不靠：必须有7个单张的东西南北中发白，加上3种花色，数位按147、258、369中的7张序数牌组成没有将牌的和牌。不计五门齐、不求人、单钓。
-	bool CheckQIXINGBUKAO(BYTE arrHandCardData[], size_t len);
-
 	//全双刻：由2、4、6、8序数牌的刻子、将牌组成的和牌。不计碰碰和、断幺。
 	bool CheckQUANSHUANGKE(BYTE arrHandCardData[], size_t len);
 
@@ -151,5 +145,18 @@ public:
 
 	//全小：由序数牌123组成的顺子、刻子（杠）、将牌的和牌。不计无字。
 	bool CheckQUANXIAO(BYTE arrHandCardData[], size_t len);
+
+	/////////////////////////特殊牌型///////////////////////////////////////////////////////////////////////////////////////////////
+	//12番
+	//全不靠（十三烂）
+	bool CheckQuanBuKao(BYTE arrHandCardData[], size_t len);
+	//组合龙
+	bool CheckZuHeLong(BYTE arrHandCardData[], size_t len);
+	//24番
+	//七星不靠：必须有7个单张的东西南北中发白，加上3种花色，数位按147、258、369中的7张序数牌组成没有将牌的和牌。不计五门齐、不求人、单钓。
+	bool CheckQIXINGBUKAO(BYTE arrHandCardData[], size_t len);
+	//88番
+	//十三幺：3种序数牌的一、九牌，7种字牌共13张中的12个单张及另外一对作将组成的和牌。不计五门齐、不求人、单钓
+	bool CheckSHISANYAO(BYTE arrHandCardData[], size_t len);
 };
 
